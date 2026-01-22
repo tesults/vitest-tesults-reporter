@@ -492,7 +492,7 @@ class TesultsReporter {
       },
       metadata: {
         integration_name: 'vitest-tesults-reporter',
-        integration_version: '1.0.0',
+        integration_version: '1.0.1',
         test_framework: 'vitest'
       }
     };

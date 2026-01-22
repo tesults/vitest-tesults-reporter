@@ -1,8 +1,9 @@
 {
   "name": "vitest-tesults-reporter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vitest Tesults Reporter",
   "main": "vitest-tesults-reporter.js",
+  "types": "vitest-tesults-reporter.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
