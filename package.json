@@ -1,0 +1,49 @@
+{
+  "name": "vitest-tesults-reporter",
+  "version": "1.0.0",
+  "description": "Vitest Tesults Reporter",
+  "main": "vitest-tesults-reporter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vitest",
+    "reporter",
+    "tesults",
+    "test",
+    "results",
+    "automation",
+    "automated",
+    "dashboard",
+    "reporting"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tesults/vitest-tesults-reporter.git"
+  },
+  "author": {
+    "name": "Tesults",
+    "email": "help@tesults.com",
+    "url": "https://www.tesults.com"
+  },
+  "contributors": [
+    {
+      "name": "Ajeet Dhaliwal",
+      "email": "ajeet.dhaliwal@tesults.com"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Ajeet Dhaliwal",
+      "email": "ajeet.dhaliwal@tesults.com"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tesults/vitest-tesults-reporter/issues"
+  },
+  "homepage": "https://github.com/tesults/vitest-tesults-reporter#readme",
+  "dependencies": {
+    "tesults": "^1.2.1"
+  }
+}
