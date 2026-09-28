@@ -344,6 +344,23 @@ class TesultsReporter {
       tesultsCase.duration = result.duration;
     }
 
+    // Vitest provides this only when task locations are enabled.
+    if (
+      file.filepath &&
+      task.location &&
+      Number.isInteger(task.location.line) &&
+      task.location.line > 0
+    ) {
+      const location = {
+        file: file.filepath,
+        line: task.location.line
+      };
+      if (Number.isInteger(task.location.column) && task.location.column > 0) {
+        location.column = task.location.column;
+      }
+      tesultsCase._Location = JSON.stringify(location);
+    }
+
     // Add failure reason
     if (result?.state === 'fail' && result.errors && result.errors.length > 0) {
       const reasons = result.errors.map((err) => {
@@ -427,9 +444,14 @@ class TesultsReporter {
    * Called when all tests have completed
    */
   onFinished(files, errors) {
-    // Check for target token
     const target = this.options['tesults-target'];
-    if (!target) {
+    const configuredOutputFile = this.options['tesults-output-file'];
+    const outputFile = (
+      process.env.TESULTS_OUTPUT_FILE !== undefined &&
+      process.env.TESULTS_OUTPUT_FILE !== ''
+    ) ? process.env.TESULTS_OUTPUT_FILE : configuredOutputFile;
+
+    if (!target && outputFile === undefined) {
       console.log('tesults-target not provided. Tesults disabled.');
       cleanupSupplementalData();
       return;
@@ -492,10 +514,30 @@ class TesultsReporter {
       },
       metadata: {
         integration_name: 'vitest-tesults-reporter',
-        integration_version: '1.0.1',
+        integration_version: '1.1.0',
         test_framework: 'vitest'
       }
     };
+
+    let outputError;
+    if (outputFile !== undefined) {
+      try {
+        const outputData = { ...data, target: '' };
+        fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+        fs.writeFileSync(outputFile, JSON.stringify(outputData, null, 2));
+        console.log('Tesults results written to ' + outputFile);
+      } catch (err) {
+        outputError = err;
+        console.log('Tesults error, failed to write results file.');
+      }
+    }
+
+    if (!target) {
+      if (outputError !== undefined) {
+        return Promise.reject(outputError);
+      }
+      return;
+    }
 
     // Upload to Tesults
     return new Promise((resolve) => {
@@ -518,6 +560,10 @@ class TesultsReporter {
         }
         resolve();
       });
+    }).then(() => {
+      if (outputError !== undefined) {
+        return Promise.reject(outputError);
+      }
     });
   }
 }

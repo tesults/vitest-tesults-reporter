@@ -1,7 +1,8 @@
 import type { Reporter } from 'vitest';
 
 export interface TesultsReporterOptions {
-  'tesults-target': string;
+  'tesults-target'?: string;
+  'tesults-output-file'?: string;
   'tesults-files'?: string;
   'tesults-build-name'?: string;
   'tesults-build-desc'?: string;
@@ -45,7 +46,7 @@ export function custom(name: string, value: unknown): void;
  * Reports Vitest test results to Tesults.com
  */
 declare class TesultsReporter implements Reporter {
-  constructor(options: TesultsReporterOptions);
+  constructor(options?: TesultsReporterOptions);
 }
 
 export default TesultsReporter;
